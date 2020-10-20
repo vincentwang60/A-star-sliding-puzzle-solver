@@ -16,12 +16,11 @@
     <br />
 </p>
 
-<br>
+<p align="center">
 
-## Visualize the Learning Process
-<img src="https://github.com/vincentwang60/sliding-puzzle-solver/blob/master/images/1.gif" width=40%>
+<img wdith = "400" height = "400" src="https://github.com/vincentwang60/sliding-puzzle-solver/blob/master/images/1.gif">
 
-<br>
+</p>
 
 
 <!-- TABLE OF CONTENTS -->
