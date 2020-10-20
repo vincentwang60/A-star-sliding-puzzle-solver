@@ -10,27 +10,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/vkwang/)
 
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <a href="https://github.com/vincentwang60/sliding-puzzle-solver">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">YOUR_TITLE</h3>
-
+  <h3 align="center">Sliding Puzzle Solver</h3>
   <p align="center">
-    YOUR_SHORT_DESCRIPTION
+   Solves a 3x3 sliding puzzle using A*
     <br />
-    <a href="https://github.com/vincentwang60/sliding-puzzle-solver"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/vincentwang60/sliding-puzzle-solver">View Demo</a>
-    ·
-    <a href="https://github.com/vincentwang60/sliding-puzzle-solver/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/vincentwang60/sliding-puzzle-solver/issues">Request Feature</a>
-  </p>
 </p>
 
 
