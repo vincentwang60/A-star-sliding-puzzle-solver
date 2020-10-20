@@ -16,6 +16,12 @@
     <br />
 </p>
 
+<br>
+
+## Visualize the Learning Process
+<img src="https://github.com/vincentwang60/sliding-puzzle-solver/blob/master/images/1.gif" width=40%>
+
+<br>
 
 
 <!-- TABLE OF CONTENTS -->
