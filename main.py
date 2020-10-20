@@ -15,7 +15,7 @@ class Game:
         self.clock = pg.time.Clock()
 
     def new(self): # initialize all variables and do all the setup for a new game
-        #r.seed(2)
+        r.seed(2)
         self.solved = False
         self.progress = 0
         self.drawn = False
@@ -26,9 +26,7 @@ class Game:
         self.tile_sprites = pg.sprite.Group()
         self.graph = Graph(self)
         self.bg = bg(self)
-        self.flag = False
         self.tile_list = []
-        self.move_bar = False
         for num_tile in self.graph.start_node.tile_list:
             self.tile_list.append(tile(self,num_tile.pos[0],num_tile.pos[1],num_tile.num))
         self.missing_coord = self.graph.start_node.missing_coord
@@ -46,8 +44,6 @@ class Game:
         sys.exit()
 
     def update(self):#move tiles and start solver if not started
-        if self.move_bar:
-            self.bg.update()
         if self.solved:
             if self.solve_tick < SOLVE_DELAY:
                 self.solve_tick += 1
@@ -58,11 +54,9 @@ class Game:
                     self.solution.pop(0)
             for tile in self.tile_list:
                 tile.frame_update()
-        if self.drawn and not self.solved and not self.flag:
+        if self.drawn and not self.solved:
             result = self.graph.a_star()
-            if result:
-                self.move_bar = True
-            if type(result) != bool:
+            if result != False:
                 self.solution = result
 
     def move(self,dir):#follows instructions given by solver
@@ -85,7 +79,7 @@ class Game:
 
     def draw(self):
         self.screen.fill(BGCOLOR)
-        if not self.drawn or self.solved or self.move_bar:
+        if not self.drawn or self.solved:
             self.all_sprites.draw(self.screen)
             self.tile_sprites.draw(self.screen)
             if not self.solved:
@@ -102,9 +96,6 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
-                if event.key == pg.K_SPACE:
-                    self.flag = not self.flag
-
 
     def draw_text(self,surface,text,x,y,color,size):
         font_name = pg.font.match_font(FONT_NAME)

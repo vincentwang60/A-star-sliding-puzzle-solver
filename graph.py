@@ -70,9 +70,7 @@ class Node: #board state
         return total
 
 class Graph:
-    def __init__(self,game): #creates root of scrambled puzzle
-        self.game = game
-        self.count = 0
+    def __init__(self): #creates root of scrambled puzzle
         self.nodes = {}
         tiles = []
         missing = r.randrange(TILESIDECOUNT*TILESIDECOUNT-1)
@@ -96,15 +94,6 @@ class Graph:
                 tiles.append(Tile([i%TILESIDECOUNT, int(i/TILESIDECOUNT)],0))
         self.start_node = Node(tiles)
         self.nodes[self.start_node.hash]=self.start_node
-        'a star init'
-        self.start_node.gScore = 0 #g(n): cost of cheapest path from start to n currently known
-        self.start_node.fScore = self.start_node.getDistance() #f(n): guess of how short path will be if it goes through n
-        self.current = self.start_node
-        self.node_list = list(self.nodes.values())
-        self.start_dist = self.current.getDistance()
-        self.min_dist = self.start_dist
-        print('min',self.min_dist)
-        heapq.heapify(self.node_list)#min heap to track lowest fScore in log(n) rather than n time
 
     def find_moves(self,node):#returns a list of up to 4 nodes for the 4 neighbors
         missing_coord = TILESIDECOUNT*node.missing_coord[1] + node.missing_coord[0]
@@ -175,28 +164,26 @@ class Graph:
         return False
 
     def a_star(self):
-        self.count += 1
-        self.current = heapq.heappop(self.node_list)
-        if self.current.isSolution():
-            print('searched:',self.count)
-            self.game.end = time.time()
-            self.game.solved = True
-            self.game.time_taken  = self.game.end - self.game.start
-            return self.traceBack(self.current)
-        self.nodes.pop(self.current.hash)
-        for neighbor in self.find_moves(self.current):
-            if self.current.gScore + 1 < neighbor.gScore:
-                neighbor.gScore = self.current.gScore + 1
-                dist = neighbor.getDistance()
-                neighbor.fScore = neighbor.gScore + dist
-                if not self.exists(neighbor):
-                    self.nodes[neighbor.hash] = neighbor
-                    heapq.heappush(self.node_list,neighbor)
-                    if dist < self.min_dist:
-                        self.min_dist = dist
-                        self.game.progress = (self.start_dist-self.min_dist)/(self.start_dist)
-                        return True
-        return False
+        self.start_node.gScore = 0 #g(n): cost of cheapest path from start to n currently known
+        self.start_node.fScore = self.start_node.getDistance() #f(n): guess of how short path will be if it goes through n
+        current = self.start_node
+        count = 0
+        node_list = list(self.nodes.values())
+        heapq.heapify(node_list)#min heap to track lowest fScore in log(n) rather than n time
+        while True:
+            count += 1
+            current = heapq.heappop(node_list)
+            if current.isSolution():
+                print('searched:',count)
+                return self.traceBack(current)
+            self.nodes.pop(current.hash)
+            for neighbor in self.find_moves(current):
+                if current.gScore + 1 < neighbor.gScore:
+                    neighbor.gScore = current.gScore + 1
+                    neighbor.fScore = neighbor.gScore + neighbor.getDistance()
+                    if not self.exists(neighbor):
+                        self.nodes[neighbor.hash] = neighbor
+                        heapq.heappush(node_list,neighbor)
 
     def traceBack(self,node):
         steps = []
