@@ -1,4 +1,5 @@
 import pygame as pg
+import random as r
 from settings import *
 
 class bg(pg.sprite.Sprite):#displays moves and fills in background
@@ -11,15 +12,25 @@ class bg(pg.sprite.Sprite):#displays moves and fills in background
         self.rect = self.image.get_rect()
         self.rect.x = 0
         self.rect.y = 0
+        self.bar = 0
 
         'add top box'
-        pg.draw.line(self.image,GRAY3,(0,50),(WIDTH,50),2)
+        pg.draw.line(self.image,GRAY3,(0,50),(WIDTH,50),9)
+        pg.draw.line(self.image,GRAY1,(1,50),(WIDTH-1,50),7)
         self.game.draw_text(self.image,'Moves: ' + str(game.moves),WIDTH/2,50/2,GRAY4,30)
 
         'add tile backdrop'
         pg.draw.rect(self.image,GRAY3,pg.Rect((TOPLEFT[0]-GAMEBORDER,TOPLEFT[1]-GAMEBORDER),(TILESIZE*TILESIDECOUNT+2*GAMEBORDER,TILESIZE*TILESIDECOUNT+2*GAMEBORDER)))
 
     def update(self):
+        goal = int((self.game.progress**2) * (WIDTH-2))
+        if self.bar < goal:
+            self.bar += 5
+        else:
+            self.game.move_bar = False
+        pg.draw.line(self.image,GRAY3,(0,50),(WIDTH,50),9)
+        pg.draw.line(self.image,GRAY1,(1,50),(WIDTH-1,50),7)
+        pg.draw.line(self.image,BLUE,(2,50),(self.bar,50),5)
         pg.draw.rect(self.image,GRAY2,pg.Rect(WIDTH/2-100,10,200,30))
         self.game.draw_text(self.image,'Moves: ' + str(self.game.moves),WIDTH/2,50/2,GRAY4,30)
 
@@ -60,8 +71,6 @@ class tile(pg.sprite.Sprite):
 
     def update(self):
         self.target = self.coord_to_pix(self.pos)
-        #pg.draw.rect(self.image,GRAY1,pg.Rect(5,5,20,20))
-        #self.game.draw_text(self.image,str(self.pos),15,15,GRAY4,10)
 
     def frame_update(self):
         if ANIM_SPEED == 0:
