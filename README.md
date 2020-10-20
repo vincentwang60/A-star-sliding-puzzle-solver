@@ -3,9 +3,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/vkwang/)
 
+
   <h3 align="center">Sliding Puzzle Solver</h3>
   <p align="center">
-   Solves a 3x3 sliding puzzle using A*
+   Solves a random 3x3 sliding puzzle using A*
     <br />
 </p>
 
@@ -14,16 +15,11 @@
 <img wdith = "400" height = "400" src="https://github.com/vincentwang60/sliding-puzzle-solver/blob/master/images/1.gif">
 
 </p>
-## Basic Overview
-
-Using stock historical data, train a supervised learning algorithm with any combination of financial indicators. Rapidly backtest your model for accuracy and simulate investment portfolio performance. 
-<p align="center"><img width=95% src="https://github.com/anfederico/Waldo/blob/master/media/Schematic.png"></p>
-
 <br>
 
-## Visualize the Learning Process
-<img src="https://github.com/anfederico/Clairvoyant/blob/master/media/Learning.gif" width=40%>
-
+## Description
+The solver first creates a 
+The solver uses the A* search algorithm on a graph of different board states. 
 <br>
 
 ## Last Stable Release
