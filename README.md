@@ -1,11 +1,4 @@
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
+
 ![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/vkwang/)
@@ -21,137 +14,176 @@
 <img wdith = "400" height = "400" src="https://github.com/vincentwang60/sliding-puzzle-solver/blob/master/images/1.gif">
 
 </p>
+## Basic Overview
 
+Using stock historical data, train a supervised learning algorithm with any combination of financial indicators. Rapidly backtest your model for accuracy and simulate investment portfolio performance. 
+<p align="center"><img width=95% src="https://github.com/anfederico/Waldo/blob/master/media/Schematic.png"></p>
 
-<!-- TABLE OF CONTENTS -->
-## Table of Contents
+<br>
 
-* [About the Project](#about-the-project)
-  * [Built With](#built-with)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-* [Usage](#usage)
-* [Roadmap](#roadmap)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
-* [Acknowledgements](#acknowledgements)
+## Visualize the Learning Process
+<img src="https://github.com/anfederico/Clairvoyant/blob/master/media/Learning.gif" width=40%>
 
+<br>
 
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`vincentwang60`, `sliding-puzzle-solver`, `twitter_handle`, `vkwang@mit.edu`
-
-
-### Built With
-
-* []()
-* []()
-* []()
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-To get a local copy up and running follow these simple steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-```sh
-npm install npm@latest -g
+## Last Stable Release
+```python
+pip install clairvoyant
 ```
 
-### Installation
-
-1. Clone the repo
-```sh
-git clone https://github.com/vincentwang60/sliding-puzzle-solver.git
-```
-2. Install NPM packages
-```sh
-npm install
+## Latest Development Changes
+```bash
+git clone https://github.com/anfederico/Clairvoyant
 ```
 
+## Backtesting Signal Accuracy
+During the testing period, the model signals to buy or sell based on its prediction for price
+movement the following day. By putting your trading algorithm aside and testing for signal accuracy
+alone, you can rapidly build and test more reliable models.
+
+```python
+from clairvoyant.engine import Backtest
+import pandas as pd
+
+features  = ["EMA", "SSO"]   # Financial indicators of choice
+trainStart = 0               # Start of training period
+trainEnd   = 700             # End of training period
+testStart  = 701             # Start of testing period
+testEnd    = 1000            # End of testing period
+buyThreshold  = 0.65         # Confidence threshold for predicting buy (default = 0.65) 
+sellThreshold = 0.65         # Confidence threshold for predicting sell (default = 0.65)
+continuedTraining = False    # Continue training during testing period? (default = false)
+
+# Initialize backtester
+backtest = Backtest(features, trainStart, trainEnd, testStart, testEnd, buyThreshold, sellThreshold, continuedTraining)
+
+# A little bit of pre-processing
+data = pd.read_csv("SBUX.csv", date_parser=['date'])
+data = data.round(3)                                    
+
+# Start backtesting and optionally modify SVC parameters
+# Available paramaters can be found at: http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
+backtest.start(data, kernel='rbf', C=1, gamma=10)
+backtest.conditions()
+backtest.statistics()  
+backtest.visualize('SBUX')
+```
+
+#### Output
+```text
+------------ Data Features ------------
+
+X1: EMA
+X2: SSO
+
+---------------------------------------
+
+----------- Model Arguments -----------
+
+kernel: rbf
+C: 1
+gamma: 10
+
+---------------------------------------
+
+---------  Engine Conditions ----------
+
+Training: 2013-03-01 -- 2015-12-09
+Testing:  2015-12-10 -- 2017-02-17
+Buy Threshold: 65.0%
+Sell Threshold: 65.0%
+Continued Training: False
+
+---------------------------------------
+
+------------- Statistics --------------
+
+Total Buys: 170
+Buy Accuracy: 68.24%
+Total Sells: 54
+Sell Accuracy: 59.3%
+
+---------------------------------------
+```
+
+<img src="https://github.com/anfederico/Clairvoyant/blob/master/media/SBUX.png">
+
+## Simulate a Trading Strategy
+Once you've established your model can accurately predict price movement a day in advance, 
+simulate a portfolio and test your performance with a particular stock. User defined trading logic
+lets you control the flow of your capital based on the model's confidence in its prediction
+and the following next day outcome.
+
+```python
+def logic(account, today, prediction, confidence):
+    
+    if prediction == 1:
+        Risk         = 0.30
+        EntryPrice   = today['close']
+        EntryCapital = account.BuyingPower*Risk
+        if EntryCapital >= 0:
+            account.EnterPosition('Long', EntryCapital, EntryPrice)
+
+    if prediction == -1:
+        ExitPrice = today['close']
+        for Position in account.Positions:  
+            if Position.Type == 'Long':
+                account.ClosePosition(Position, 1.0, ExitPrice)
 
 
-<!-- USAGE EXAMPLES -->
-## Usage
+simulation = backtester.Simulation(features, trainStart, trainEnd, testStart, testEnd, buyThreshold, sellThreshold, continuedTraining)
+simulation.start(data, 1000, logic, kernel='rbf', C=1, gamma=10)
+simulation.statistics()
+simulation.chart('SBUX')
+```
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+#### Output
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+```text
+------------- Statistics --------------
 
+Buy and Hold : -6.18%
+Net Profit   : -61.84
+Strategy     : 5.82%
+Net Profit   : 58.21
+Longs        : 182
+Sells        : 168
+Shorts       : 0
+Covers       : 0
+--------------------
+Total Trades : 350
 
+---------------------------------------
+```
 
-<!-- ROADMAP -->
-## Roadmap
+<img src="https://raw.githubusercontent.com/anfederico/Clairvoyant/master/media/Chart.png">
 
-See the [open issues](https://github.com/vincentwang60/sliding-puzzle-solver/issues) for a list of proposed features (and known issues).
+## Other Projects
+#### Intensive Backtesting
+The primary purpose of this project is to rapidly test datasets on machine learning algorithms (specifically Support Vector Machines). While the Simulation class allows for basic strategy testing, there are other projects more suited for that task. Once you've tested patterns within your data and simulated a basic strategy, I'd recommend taking your model to the next level with:
+```text
+https://github.com/anfederico/Gemini
+```
 
+#### Social Sentiment Scores
+The examples shown use data derived from a project where we are data mining social media and performing stock sentiment analysis. To get an idea of how we do that, please take a look at:
+```text
+https://github.com/anfederico/Stocktalk
+```
 
+## Notes
+#### Multivariate Functionality
+Remember, more is not always better!
+```python
+variables = ["SSO"]                            # 1 feature
+variables = ["SSO", "SSC"]                     # 2 features
+variables = ["SSO", "SSC", "RSI"]              # 3 features
+variables = ["SSO", "SSC", "RSI", ... , "Xn"]  # n features
+```
 
-<!-- CONTRIBUTING -->
 ## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - vkwang@mit.edu
-
-Project Link: [https://github.com/vincentwang60/sliding-puzzle-solver](https://github.com/vincentwang60/sliding-puzzle-solver)
-
-
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
-
-
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/vincentwang60/repo.svg?style=flat-square
-[contributors-url]: https://github.com/vincentwang60/repo/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/vincentwang60/repo.svg?style=flat-square
-[forks-url]: https://github.com/vincentwang60/repo/network/members
-[stars-shield]: https://img.shields.io/github/stars/vincentwang60/repo.svg?style=flat-square
-[stars-url]: https://github.com/vincentwang60/repo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/vincentwang60/repo.svg?style=flat-square
-[issues-url]: https://github.com/vincentwang60/repo/issues
-[license-shield]: https://img.shields.io/github/license/vincentwang60/repo.svg?style=flat-square
-[license-url]: https://github.com/vincentwang60/repo/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/vincentwang60
-[product-screenshot]: images/screenshot.png
+Please take a look at our [contributing](https://github.com/anfederico/Clairvoyant/blob/master/CONTRIBUTING.md) guidelines if you're interested in helping!
+#### Pending Features
+- Export model
+- Support for multiple sklearn SVM models
+- Visualization for models with more than 2 features
