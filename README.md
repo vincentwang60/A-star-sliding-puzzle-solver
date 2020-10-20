@@ -6,10 +6,9 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
+![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/vkwang/)
 
 <!-- PROJECT LOGO -->
 <br />
