@@ -3,7 +3,6 @@ import pygame as pg
 import random as r
 import copy
 import math
-import time
 import heapq
 
 class Tile:

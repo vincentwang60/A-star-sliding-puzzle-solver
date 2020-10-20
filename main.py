@@ -15,7 +15,6 @@ class Game:
         self.clock = pg.time.Clock()
 
     def new(self): # initialize all variables and do all the setup for a new game
-        r.seed(2)
         self.solved = False
         self.progress = 0
         self.drawn = False
@@ -24,13 +23,12 @@ class Game:
         self.solution = []
         self.all_sprites = pg.sprite.Group()
         self.tile_sprites = pg.sprite.Group()
-        self.graph = Graph(self)
+        self.graph = Graph()
         self.bg = bg(self)
         self.tile_list = []
         for num_tile in self.graph.start_node.tile_list:
             self.tile_list.append(tile(self,num_tile.pos[0],num_tile.pos[1],num_tile.num))
         self.missing_coord = self.graph.start_node.missing_coord
-        self.start = time.time()
 
     def run(self):#game loop
         self.playing = True
@@ -55,9 +53,13 @@ class Game:
             for tile in self.tile_list:
                 tile.frame_update()
         if self.drawn and not self.solved:
+            start = time.time()
             result = self.graph.a_star()
+            end = time.time()
+            self.time_taken = end-start
             if result != False:
                 self.solution = result
+            self.solved = True 
 
     def move(self,dir):#follows instructions given by solver
         moving_tile = None
