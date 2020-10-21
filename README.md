@@ -7,7 +7,6 @@
   <h1 align="center">Sliding Puzzle Solver</h1>
   <p align="center">
   <h3 align = "center"> Solves a random sliding puzzle using A* </h3>
-    <br />
 </p>
 
 <p align="center">
@@ -30,7 +29,14 @@ UI is implemented using [PyGame](https://www.pygame.org/docs/)
 
 ## References
 - https://towardsdatascience.com/sliding-puzzle-solving-search-problem-with-iterative-deepening-a-d7e8c14eba04
-<br>
+
+
+## Author
+[![Vincent Wang](https://avatars3.githubusercontent.com/u/12126249?s=460 =150x150)](https://github.com/vincentwang60)  |
+---|---
+[Vincent Wang](https://github.com/vincentwang60) |
+
+
 
 [license-shield]: https://img.shields.io/github/license/github_username/repo.svg?style=flat-square
 [license-url]: https://github.com/github_username/repo/blob/master/LICENSE.txt
