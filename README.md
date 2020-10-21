@@ -32,7 +32,7 @@ UI is implemented using [PyGame](https://www.pygame.org/docs/)
 
 
 ## Author
-[![Harsh Vijay](https://avatars3.githubusercontent.com/u/12126249)](https://github.com/iharsh234)  | [![Quandl.com](https://github.com/iharsh234/WebApp/blob/master/images/quandl.jpg)](https://www.quandl.com/)
+[![Harsh Vijay](https://avatars3.githubusercontent.com/u/12126249) =150x150](https://github.com/iharsh234)  | [![Quandl.com](https://github.com/iharsh234/WebApp/blob/master/images/quandl.jpg)](https://www.quandl.com/)
 ---|---
 [Harsh Vijay ](https://github.com/iharsh234) |[Quandl](https://www.quandl.com)
 
