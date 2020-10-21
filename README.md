@@ -4,7 +4,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <p>
-  <h3 align="center">Sliding Puzzle Solver</h3>
+  <h1 align="center">Sliding Puzzle Solver</h1>
   <p align="center">
    Solves a random sliding puzzle using A*
     <br />
