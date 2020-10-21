@@ -6,7 +6,7 @@
 <p>
   <h1 align="center">Sliding Puzzle Solver</h1>
   <p align="center">
-   Solves a random sliding puzzle using A*
+  <h3 align = "center"> Solves a random sliding puzzle using A* </h3>
     <br />
 </p>
 
@@ -35,4 +35,4 @@ UI is implemented using [PyGame](https://www.pygame.org/docs/)
 [license-shield]: https://img.shields.io/github/license/github_username/repo.svg?style=flat-square
 [license-url]: https://github.com/github_username/repo/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/github_username
+[linkedin-url]: https://linkedin.com/in/vkwang
