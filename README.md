@@ -6,7 +6,7 @@
 <p>
   <h3 align="center">Sliding Puzzle Solver</h3>
   <p align="center">
-   Solves a random 3x3 sliding puzzle using A*
+   Solves a random sliding puzzle using A*
     <br />
 </p>
 
@@ -21,8 +21,22 @@
 The solver creates random 3x3 puzzles until it finds one that is solvable. [geeksforgeeks.org/check-instance-15-puzzle-solvable](https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/)
 The solver then uses the [A* Search Algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm) on a graph with nodes consisting of different board states. The heuristic used is [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry).
 When the solution is found, the solver saves the path taken, and moves the pieces accordingly.
+UI is implemented using [PyGame](https://www.pygame.org/docs/)
 <br>
 
+<br>
+
+## Future Development
+- Enhance UI with progress bar to reasonably estimate time to solve.
+- Make algorithm distributable to solve bigger puzzles in reasonable time.
+- Port to web platform and utilize cloud computing for algorithm computations.
+
+<br>
+<br>
+
+## References
+- https://towardsdatascience.com/sliding-puzzle-solving-search-problem-with-iterative-deepening-a-d7e8c14eba04
+<br>
 
 
 [license-shield]: https://img.shields.io/github/license/github_username/repo.svg?style=flat-square
