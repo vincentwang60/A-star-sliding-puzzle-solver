@@ -17,8 +17,11 @@
 
 ## Description
 The solver creates random 3x3 puzzles until it finds one that is solvable. [geeksforgeeks.org/check-instance-15-puzzle-solvable](https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/)
+
 The solver then uses the [A* Search Algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm) on a graph with nodes consisting of different board states. The heuristic used is [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry).
+
 When the solution is found, the solver saves the path taken, and moves the pieces accordingly.
+
 UI is implemented using [PyGame](https://www.pygame.org/docs/)
 
 
